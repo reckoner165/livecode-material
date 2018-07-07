@@ -1,0 +1,118 @@
+bps(70/60)
+bps(169/60)
+
+d1 $ slow 2 $ every 4 (const $ sound "[~kr:1] [kr kr] [kr:1 kr] ~") $ sound "[[~kr:1] [kr kr] kr:1 ~]?"
+d2 $ sound "kr:6 kr:6" # pan 0.2 # gain 1.1
+d3 $ slow 2 $ shuffle 4 $ sound "kr:3 kr:4 kr:3 kr:4" # pan 0.7 # gain 0.9
+d1 $ sound "kr [kr:1 kr] [~ kr] [kr:1 kr:1?]"
+hush
+
+
+d2 $ every 2 (const $ slow 4 $ sound "kr kr:1 [kr kr] [~ kr:1] [ ~ kr] [kr:1 kr:1 kr:8 ~]") $ slow 4 $ sound "kr kr:1 [kr kr] [~ kr:1] [ ~ kr] [kr:1 ~ ~ kr:1?]"
+
+
+d1 $ shuffle 2 $ sound "kr:3 kr:4 kr:3 kr:4 kr:3 kr:3" # gain 0.9 # pan 0.75
+
+d2 $ silence
+
+-- Bloom
+bps (140/60)
+d1 $ sound "808bd [~ 808bd] [808lt 808ht] [808hc ~]"
+d2 $ sound "kr [kr:3? kr:4] [~ kr:3] [kr:4 kr:3?]" # gain 1.1
+d3 $ slow 2 $ sound "kr:5 kr:6 kr:6 kr:6?" # gain 1.2
+d4 $ slow 2 $ sound "[~  ~ kr:1 ~] [~ kr:1 ~ ~][kr:1 kr:1 kr:1 ] kr:8 " # gain 1.2
+
+d2 silence
+
+
+d1 $ slow 2 $ sound "kr kr kr:1 [kr kr:1] ~ kr kr:1 [kr kr:1]"
+
+-- Supply Chain Quotidienne
+bps (107/60)
+-- Verse
+d1 $ cat [
+  stack[jux (|*| speed 1.05) $ sound "kr kr kr:1 [kr kr:1]", every 2 (const $ sound "kr:6 kr:2" |+| pan "0.7 0.3") $ sound "kr:6 kr:6" |+| pan 0.7],
+  stack[jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr? kr:1]", sound "kr:6 kr:6" |+| pan 0.7],
+  stack[jux (|*| speed 1.05) $  sound "~ kr kr:1 [kr kr:1]", sound "kr:6 kr:6" |+| pan 0.7],
+  every 2 (const $ stack[ jux (|*| speed 1.05) $ sound "[kr:1? kr:1] [kr:8 kr:1] [kr:7 kr:8] kr", sound "kr:6 kr:6" |+| pan 0.7]) $ stack[ jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr kr:1]", sound "kr:6 kr:6" |+| pan 0.7]
+] # gain 1.2
+
+-- Chorus
+d1 $ cat [
+  stack[jux (|*| speed 1.05) $ sound "kr kr kr:1  [kr kr:1]", every 2 (const $ sound "kr:6 kr:2" |+| pan "0.7 0.3") $ sound "kr:6 kr:6" |+| pan 0.7],
+  stack[jux (|*| speed 1.05) $ sound "[~ kr:1] kr kr:1 [kr? kr:1]" |+| gain "[~ 0.7] 1 1 1", sound "kr:6 kr:6" |+| pan 0.7],
+  stack[jux (|*| speed 1.05) $  sound "[~ kr:1] kr kr:1 [kr kr:1]"|+| gain "[~ 0.8] 1 1 1", sound "kr:6 kr:6" |+| pan 0.7],
+  every 2 (const $ stack[ jux (|*| speed 1.05) $ sound "[~ kr:1] [kr:9 kr:1] [kr:7 kr:8] kr:9"|+| gain "0.8 [1 0.8] 1 1", sound "kr:6 kr:6" |+| pan 0.7]) $ stack[jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr kr:1]" , sound "kr:6 kr:6" |+| pan 0.7]
+] |*| gain 1.2
+
+
+-- Outro
+d1 $ stack [
+jux (|*| speed 1.05) $ cat[
+sound "kr? kr kr:1 [kr kr:1?]",
+every 4 (const $ sound "[kr kr:9][kr:1 kr:1][kr kr:7][kr:8 kr:8]") $ sound "[kr kr:1?] [~ kr] [~ kr] [kr:1 kr:1?]" |+| gain "1 [1 0.9] 1 [1 0.9]"
+],
+slow 2 $ sound "kr:2*8" |+| gain (0.8 + 0.2*sin 1) |+| speed (1 + 0.07 * sin 3) |+| pan 0.3
+] |*| gain 1.2
+
+hush
+
+---
+
+bps (110/60)
+d1 $ silence
+d1 $ sound "kr [~ kr] kr:1 [~ kr:1]"
+d1 $ sound "[~ kr:1] [~ kr] kr:1 ~"
+
+
+d1 $ cat [
+  stack[sound "kr [~ kr] kr:1 [~ kr:1]", sound "kr:6 kr:6"],
+  stack[sound "[~ kr:1] [kr kr] kr:1 [~ kr:1]", sound "kr:6 kr:6"],
+  stack[sound "[~ kr:1] [kr kr] kr:1 [~ kr:1]", sound "kr:6 kr:6"],
+  stack[sound "[~ kr:1] [~ kr] kr:1 ~", sound "kr:6 kr:6"]
+] # gain 1.2
+
+bps(97/60)
+import Sound.Tidal.MIDI.Context
+
+displayOutputDevices >>= putStrLn
+
+
+m1 <- midiStream devices "IAC Driver Bus" 1 synthController
+
+keyStreams <- midiproxy 1 "IAC Driver Bus 1" [(keys, 1)]
+
+
+bps(110/60)
+d1 $ sound "tbd:3*4"
+d1 $ every 4 (0.25 <~) $ striate 2 $ slow 4 $ sound "[tbd:3 tbd:2? ~ tbd:3] tsn:5? [~ tbd:3 ~ tsn:4] [tbd:3 ~ tsn:5 ~]"
+d2 $ every 2 (const $ slow 2 $ sound "[thh:3 ~ thh:2 thh:2] [~ ~ thh:2 thh:3] [thh:3*3 ~] thh:2") $ iter 4 $ slow 2 $ sound "thh:3 [thh:3 thh:2] [~ thh:2 ~ ~] [thh:2 thh:3?]" # gain 0.9
+hush
+d3 $ iter 4 $ degrade $ sound " ~ ~ ~ [tsn:3 ~ tsn:3 ~]" # pan 0.4
+
+d3 $ silence
+d1 $ silence
+d2 $ silence
+
+-- Into Dust
+
+bps(101.08/60)
+d1 $ trunc <"1 0.75"> $ linger "<1 0.75 0.5 0.25>" $ sound "[tbd:2 tsn:2] tbd:4 [tsn:4 tsn:3?] [~ tsn:3]"
+
+--verse
+d1 $ degradeBy 0.4 $ stack[sound "[tsn:2 tsn:2] ~ [~ tsn:4] [~  tsn:3]" # gain 0.98 # pan 0.35, -- snares
+                          sound "~ [tbd:4 tbd:3?] ~ ~" ]                             -- kick/bass
+d3 $ sound "[tsn:5 tsn:5?] ~ [tsn:5?] ~" # pan 0.8
+d2 $ iter 4 $ shuffle 4 $ sound "thh:6 [thh:3 thh:4] [~ thh] [~ thh:2]" # pan 0.4 # gain ((density 0.2 $ sine) + 0.2)
+
+
+-- kraut rock sample song
+hush
+bps(80/60)
+d1 $ sound "kr:5 kr:6 kr:6 kr:6"
+d2 $ slow 0.5 $ every 8 (const $ sound "~ kr kr:1 kr:1") $ sound "~ kr [kr:1 kr:1?] kr" # gain "1 1 [1 0.7] 1"
+d2 $ slow 0.5 $ every 8 (const $ sound "~ kr [kr:1 kr:1] kr:8" # pan "0.5 0.5 [0.5 0.5] 0.8" # gain "1 1 [1 0.9] 1") $ sound "~ kr kr:1 kr"
+-- todo : cymbals, more fills, tom break
+
+d1 $ linger "<1 0.6 0.4 0.4>" $ sound "kr kr:5 kr:5 kr:1 ~"
+hush

@@ -1,0 +1,14 @@
+import Sound.Tidal.MIDI.Context
+
+displayOutputDevices >>= putStrLn
+
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+--  Ableton: 70bpm, delay st to 1
+
+
+bps(100/60)
+
+m1 $ slow 1.33 $ note "0 [~ 5] ~ 7" |+| stack [note "[-24 -12]/2", note "[5 12]/4"] |+| dur 1

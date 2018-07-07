@@ -1,0 +1,210 @@
+import Sound.Tidal.MIDI.Context
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+m2 <- midiStream devices "IAC Driver Bus 1" 2 synthController
+m3 <- midiStream devices "IAC Driver Bus 1" 3 synthController
+
+bps(65/60)
+--
+-- d1 $ stack[
+-- every 8 (stut 2 0.5 0.25) $ every 4 (const $ sound "808bd(3,8) 808:3") $ sound "808bd [~ 808bd] [808:3 808:4] [ ~ ~ 808:4? 808:1]",
+-- every 2 (fast 2) $ every 4 (fast 2) $ iter 4 $ linger "<0.25 0.5 1 0.125 0.75>" $ sound "808:1(4,8)" |+| speed (1 + 0.1* sine)
+-- -- jux (rev) $ every 2 (striate 2) $ chop 8 $ sound "glitch:2" |+| speed (rand) |+| hcutoff 4000
+-- -- sound "[thh:2 tbd:2]*2" |+| cutoff 900,
+-- -- jux (rev) $ every 4 (0.125<~) $ sound "lighter:2 ~ glitch:4 [~ lighter:4]"
+-- ]
+--
+-- d2 $ spaceOut ([0.25,0.5..2] ++ [2,1.75..0.25]) $ sound " ~cp*4"
+-- d2 $ silence
+--
+-- m2 $  jux(rev) $ every 2 (|+| note "12") $ every 4 (0.25<~) $ note "5 [12 10] ~ [8 15]" |+| note "0.125 0.25"
+-- m2 silence
+--
+-- d1 $ brak $ let x = "bd [sn [[sn bd] sn]]*1/3" in interlace (sound $ slow 2 $ x) (sound $ every 2 (append "[hh]*6") x)
+--   |+| speed "4"
+--
+-- d1 $ let x = "808bd [~ 808bd] 808:3 ~" in interlace (sound $ x) (spaceOut ([0.25, 0.5, 1 ]) $ linger "<0.25 0.125 1 0.75 0.5>" $ sound "808:1(4,8)")
+--
+-- d1 $ weave 16 (sound "arpy*8" # n (run 8))
+--   [vowel "a e u o a i o a",
+--    -- vowel "i [i o] o u",
+--    -- vowel "[e o]/3 [i o u]/2",
+--    speed "1 2 3"
+--   ]
+--
+--   hush
+--
+-- m2 $ stut 2 0.5 ("[0.25,0.5..2]") $ note "7"
+--
+-- d1 $ stack [
+-- every 8 (const $ sound "tbd:2*8") $ every 2(jux(0.25<~)) $ sound "tbd:2 tbd:2 [tbd:2 ~ ~ tbd:2] ~"|+| cutoff 1000,
+-- -- every 4 (const $ sound "tbd:2(3,8,2)") $ sound "[tbd:2 tsn:3?] [~ tbd:2] tsn:3 ~ tbd:2 [~ tbd:2] tsn:4 [~ tsn:3?]",
+-- sound "808:1 thh? [~ 808:1] [thh 808:4 ~ 808:1?]" |+| hcutoff 2000,
+-- jux (rev) $ every 2 (stut 2 0.5 0.125) $ sound "~ [~ sn:2] [~ 808:3? ~ ~] ~" |+| speed (1 + 0.1* sin 2)
+-- -- iter 4 $ sound "glitch:4 ~ ~ 808:1*4?",
+-- -- degradeBy 0.2 $ sound "kr:3*8" |+| speed (1 + 0.1 * sine) |+| gain (1.1 + 0.1 * sin 3) |+| pan (0.4 + 0.3 * sine)
+-- ]
+--
+-- hush
+--
+-- d1 $ stack [
+-- every 4 (stut 2 0.5 0.25) $ sound "[808:1 808bd] [808:4 808bd] [808:1 808bd 808:1 sn:2] ~",
+-- jux (rev) $ sound "~ ~ 808:3 ~"
+-- ]
+--
+-- -- Intro track
+-- d1 $ stack[
+-- sound "tbd:2 tbd:2 [tbd:2 ~ ~ tbd:2] ~" |+| cutoff 1000,
+-- degradeBy 0.3 $ fast 2 $ sound "808:1 hh [~ 808:1] [hh ~ 808:4  ~]" |+| hcutoff 5000,
+-- jux (rev) $ every 2 (stut 2 0.5 0.125) $ sound "~ [~ sn:2] [ ~ 808:3? ~ ~] ~" |+| speed ( 1 + 0.1 * sin 2)
+-- -- degradeBy 0.1 $ sound "kr:3*8" |+| speed (1 + 0.1 * sin 2) |+| gain (1 + 0.1 * sin 3),
+-- -- iter 4 $ sound "~ ~ ~ 808:1*4",
+-- -- every 4 (const $ sound "tbd:3(3,8,2)") $ sound "tbd:2 [~ tbd:2] tsn:3 ~ [tbd:2 tsn:3?] [~ tbd:2] tsn:4 [~ tsn:3?]"
+-- ]
+--
+-- -- Birdsong
+-- m2 $ every 2 (rev) $ every 4 (|+| note "12") $ note "0 5 [3 8] [12 10?]" |+| let key = "2" in (note $ key) |+| dur (rand)
+--
+-- d1 $ stack[
+-- -- every 4 (const $ sound "808bd(3,8) 808:3") $ sound "808bd [~ 808bd] 808:3 ~",
+-- every 2 (stut 4 0.3 0.5) $ jux (0.125<~) $ fast 4 $ every 2 (0.25<~) $ sound "808:6 808:7" |+| speed (1 + 0.5 * rand) |+| crush (3 + 5 * rand) |+| cutoff (900 + 600 * sine),
+-- -- spaceOut ([ 0.25,0.5,1]) $ iter 4 $ linger "<0.125 0.5 1 0.75 0.25>" $ sound "808:1(4,8)"
+-- jux (rev) $ sound (samples "glitch*4" (run 3))
+-- ]
+--
+-- m2 silence
+--
+-- d1 $ stack[
+-- every 4 (0.25<~) $ sound "tbd:3 [tbd:3 tbd:2?] tsn:3 [~ tsn:2?]",
+-- degradeBy 0.6 $ iter 4 $ sound " ~ [thh:3 thh:2] [~ tsn:4] ~ thh:3",
+-- slow 4 $ sound "tsn:4" |+| pan 1
+-- ]
+--
+-- m2 silence
+-- m1 silence
+-- hush
+--
+-- m1  $ every 8 (stut 4 0.25 (-0.25)) $ slow 4 $ every 2 (|+| note "2") $ every 4 (rev) $ iter 4 $ linger "<0.25 0.5 1 0.75>" $ note "2 4 7 10 4 9 11 12" |+| note "-24" |+| nudge (-0.125)
+--
+-- bps (100/60)
+--
+-- d1 $ stack[
+-- sound "~ hh ~ hh",
+-- slow 2 $ sound "tbd:2 [~ tbd:2] [~ tsn:4] [~ tbd:3?] tbd:2 [ ~ tbd:2] tsn:2 tsn:2"
+-- ]
+
+hush
+
+-- Intro
+d1 $ stack [
+sound "tbd:2 tbd:2 [tbd:2 ~ ~ tbd:2] [~ 808bd? ~ ~]" |+| cutoff 700,
+jux (rev) $ every 4 (fast 2) $ sound "[~ 808:1][~ thh:1?][~ hh][808:4 ~]",
+every 2 (rev) $ jux (0.125<~) $ every 4 (stut 4 0.5 0.25) $ sound "[808:2 ~] ~ ~ ~"
+-- iter 4 $ sound "~ ~ ~ [808:1*4]" |+| speed (1 + 0.3 * sin 2),
+-- every 4 (const $ fast 2 $ sound "tbd:2(3,8,2)") $ sound "[tbd:2 tsn:3?] [~ tbd:2] tsn:3 ~ tbd:2 [~ tbd:2] tsn:4 [~ tsn:3?]",
+-- degradeBy 0.1 $ sound "kr:3*8" |+| speed (1 + 0.1* sin 3)
+]
+-- Birdsong
+m2 $ degradeBy 0.4 $ fast 2 $ whenmod 4 2 (rev) $ every 2 (|+| note "12") $ note "0 [2 3?] 8 [10? 5]" |+| let key = "2" in (note $ key) |+| dur (rand)
+m2 silence
+
+
+-- Hip Hop
+d1 $ stack[
+-- every 4 (const $ sound "tbd:2(3,8) 808:3") $ sound "tbd:2 [~ tbd:2] 808:3 ~",
+spaceOut([0.25, 0.5, 1]) $ linger "<0.25 0.75 0.125 0.5 1>" $ sound "808:1(4,8)",
+degradeBy 0.6 $ iter 4 $ sound "808:4 ~"
+]
+-- hip hop melody
+m2 $ every 2 (rev) $ note "0 [7 5] ~ [15 12]"
+
+-- Syncopated beat
+d1 $ stack [
+-- every 8 (const $ sound "tbd:3*8") $ every 4 (stut 2 0.5 0.25) $ sound "[808:1 tbd:3][808:1 tbd:3] [~ tbd:3 808:1 tsn:4] [~ sn:2]",
+chop 4 $ striate 8 $ sound (samples "glitch*8" (run 6)) |+| speed (1 + 0.5 * sine) |+| hcutoff 7000
+]
+
+-- Numbers
+d1 $ stack [
+-- brak $ sound "tbd:3 [tbd:3? tbd:3] sn:2 [tbd:2 tsn:4]?",
+-- jux (stut 2 0.5 0.0625) $ every 2 (0.125<~) $ sound "thh:3*4",
+iter 8 $ sound "808:2*4 ~ ~ ~" |+| speed (rand)
+]
+
+hush
+
+m1 $ every 2 (chop 32) $ every 8 (stut 8 0.25 0.125) $ striate 2 $ iter 4 $ linger "<0.25 0.75 0.5 0.125>" $ slow 2 $ every 2 (|+| note "2") $ note "6 [1? 3] [8 0] [3 8]" |+| let key = "-24" in (note $ key) |+| nudge (-0.5)
+
+m1 silence
+
+
+
+* Our Online Things
+
+- facebook.com/reckonermusic
+- mindofmatthew.com
+- acrosspolyethylene.com
+
+
+
+hush
+
+
+
+d1 $ stack[
+degrade $ sound "tbd:2 tbd:2 [tbd:2 ~ ~ tbd:2] [~ tbd:3?] " |+| cutoff 400,
+jux (rev) $ every 4 (stut 2 0.5 0.125) $ sound "[808:2 808:1] [~ hh][~ 808:1 ~ hh] [~  hh]" |+| hcutoff 5000
+-- every 4 (stut 4 0.35 (-0.125)) $ sound "~ [~ tsn:3] [~ 808:3? ~ ~] [~ tsn:4]"
+
+-- sound "[tbd:2 tsn:3?] [~ tbd:2] tsn:3 ~ tbd:2 [~ tbd:2] tsn:4 [~ tsn:3?]" |+| gain 1.05,
+-- degradeBy 0.1 $ sound "kr:3*8" |+| speed (1 + 0.1*sin 3) |+| pan (0.7)
+-- iter 4 $ sound "808:1*4 ~ ~ ~" |+| speed (1 + 0.5*rand) |+| pan (rand)
+]
+
+m2 $ every 4 (rev) $ every 2 (|+| note "12") $ note "0 5 [10 8] [15 3]" |+| let key = "2" in (note $ key) |+| dur (rand)
+
+
+
+m2 silence111
+
+
+d1 $ stack [
+-- every 4 (const $ sound "tbd:2(3,8) 808:3") $ sound "tbd:2 [~ tbd:2] 808:3 ~ ",
+spaceOut ([0.25, 0.5, 1]) $ linger "<0.25 0.125 0.75 1 0.5>" $ sound "808:1(4,8)",
+iter 4 $ sound "808:4 ~"
+]
+
+m2 $ every 2 (rev) $ (0.25<~ )$ note "0 [7 5] ~ [15 12]"
+
+
+d1 $ stack [
+every 8 (const $ sound "tbd:2*8") $ every 4 (stut 2 0.5 0.25) $ sound "[808:1 tbd:2] [808:1 tbd:2] [~ tbd:2 hh sn:2] ~"
+-- iter 8 $ sound "tsn:4*2 ~ ~ ~" |+| pan 0.8,
+-- degradeBy 0.6 $ every 2 (chop 8) $ striate 8 $ sound (samples "glitch*8" (run 6)) |+| speed (1 + 0.5 * sine) |+| hcutoff 4000 |+| pan (rand) |+| crush 3
+]
+
+d1 $ stack[
+sound "tbd:2 [tbd:2 tbd:2?] sn:2 ~",
+-- jux (0.25<~) $ sound "hh*2",
+iter 4 $ sound "808:2*4 ~ ~ ~" |+| speed (rand) |+| pan (sin 2)
+]
+
+hush
+
+
+m1 $ every 2 (chop 8) $ degradeBy 0.3 $ slow 4 $ every 4 (stut 8 0.5 0.125) $ iter 8 $ linger "<0.125 0.5 0.25 0.75>" $ note "0 3 9 2 4 7 5 4" |+| let key = "-24" in (note $ key) |+| nudge (-0.75)
+
+m1 silence
+m2 silence
+
+
+
+* Our Online Things
+
+ - facebook.com/reckonermusic
+ - mindofmatthew.com
+ - acrosspolyethylene.com
+
+
+:)

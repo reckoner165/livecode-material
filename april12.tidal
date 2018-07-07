@@ -1,0 +1,200 @@
+import Sound.Tidal.MIDI.Context
+
+displayOutputDevices >>= putStrLn
+
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+m2 <- midiStream devices "IAC Driver Bus 1" 2 synthController
+m3 <- midiStream devices "IAC Driver Bus 1" 3 synthController
+
+m1 $ note "0"
+
+bps(70/60)
+-- m1 $ brak $ every 4 (shuffle 3) $ degradeBy 0.2 $ linger "<0.75 0.25 1>" $ slow 0.5 $ whenmod 4 2 (|+| note "-2 [-2 0 ~ ~] [-1 0]") $ whenmod 9 7 (|+| note "5") $ note "[0 12] [5 ~ 8 ~] [12 15?]" |+| note "-5" |+| note "<0 12 -12 24>"
+-- m2 $ note "0 0 [0 ~ 2 2]" |+| note "-24"
+--
+-- d1 $ stack[
+-- sound "bd [~ bd] sn ~",
+-- sound "hh*4"
+-- ]
+
+hush
+
+-- m1 $ every 2 (slow 0.25) $ stut 1 0.1 (-0.5) $ whenmod 3 2 (0.33 <~) $ whenmod 4 2 (const $ note "0 [-4 5] [10 7]" ) $ note "-7 5 [12 -2]" |+| note "<12 -2 -12 10>"
+-- -- m1 $ note "-7 2 [5 12?]"
+--
+m1 $ note "-5 0 3"
+-- m1 $ whenmod 4 3 (slow 0.5) $ whenmod 3 2 (0.33 <~) $ trunc "<0.66 1>" $ every 2 (rev) $ whenmod 4 2 (const $ note "-7 -4 [12 -2 ~ 10?]") $ note "[-9 2] [3 7] [8 15 ~ 3?]" |+| note "<7 12 -12 -2>"
+--
+-- m3 $ slow 2 $ every 4 (0.33<~) $ trunc "<0.33 1>" $ whenmod 4 2 (const $ note "~ [3 8] [7 -5]" |+| dur "0.3") $ note "0 5 [8 -4]" |+| note "24" |+| dur "1 0.2"
+-- m1 $ every 3 (rev) $ whenmod 8 6 (trunc 0.33) $ iter 3 $ whenmod 4 2 (|+| note "-2 -2 [-1 -2 -1 -2]") $ note "[~ -5] 0? [3 7? ~ 10]" |+| note "<0 12 -12>"
+
+m1 silence
+m2 silence
+m3 silence
+
+-- bps(70/60)
+-- m1 $ every 8 (slow 0.5) $ every 2 (0.66<~ ) $ trunc "<0.75 0.25 0.5 1>" $ every 2 (rev) $ iter 3 $ note "[-9 7] 0 [8 3]" |+| note "-2"
+-- m3 $ slow 0.25 $ whenmod 4 2 (rev) $ degradeBy 0.2 $ note "[-5 -12?] [~ 0] [3 7]" |+| note "24" |+| dur "0"
+-- m2 $ note "0 0 0" |+| note "-24"
+
+
+bps(100/60)
+-- m1 $ every 2 (|+| note "-2 0 0") $ whenmod 4 3 (|+| note "-4 0 0") $ note "[~ 2] [17 7] [12 15?]"
+
+-- m1 $ slow 1.33 $ note "0 [~ 5] ~ 7" |+| stack [note "[-24 -12]/2", note "[5 12]/4"] |+| dur 1
+
+
+bps(70/60)
+m2 silence
+m1 silence
+--
+-- m2 $ brak $ every 4 (0.25<~) $ stack[
+-- linger "<0.25 0.5 1>" $ note "0 [~ 0?] [2 0] [4 3]? ",
+-- note "~ ~ [12 9][11 7]",
+-- note "10 ~ ",
+-- whenmod 4 3 (slow 0.5) $ every 8 (slow 0.25) $ note "6(3,4)"
+-- ] |+| note "-24"
+--
+-- m1 $ stack [ brak $ every 4 (rev) $ note "0(5,8)" |+| dur "0.4", every 2 (rev) $ note "[8 3](4,8)" |+| note "<0 12>" |+| velocity "0.7"]
+--
+-- m2 $ stack [
+-- -- brak $ iter 4 $ note "0 [~ 0] [~ 1] ~",
+-- note "~ ~ [~ 1] 0?"
+-- -- slow 0.5 $ note "6 4 [6  ~ 6 10?] 4"
+-- -- note "[~ 10?] ~ ~ ~",
+-- -- note "[12 9 ~ 8][11 7 ~ 8]"
+-- -- every 2 (rev) $ every 4 (striate 2) $ note "~ 2 ~ [~ 3 ~ 2] "
+--
+-- ] |+| note "-24"
+--
+-- m2 silence
+-- m1 silence
+--
+--
+-- m1 $ stack [
+-- every 2 (stut 4 0.5 (0.25)) $ every 3 (rev) $ iter 4 $ note "[[18 17?] 20? 24 [25? 27]]" |+| note "-12"
+-- -- every 8 (slow 0.25 ) $ trunc "<0.5 0.75>" $ whenmod 4 3 (0.25<~) $ every 2 (rev) $ note "-2(2,4) [~ 2] [~ 12]"
+-- ]
+-- |+|
+-- stack [note "-12"] |+| dur 0.1
+
+--
+-- bps(70/60)
+--
+-- m2 $ stack[
+-- every 2 (0.25<~) $ note "[~ 0][8 0][~ 0 6 2] [2 ~ 8 1]" |+| velocity "1",
+-- every 4 (rev) $ every 4 (stut 4 0.2 (0.25)) $ iter 2 $ slow 0.5 $ note "[~ 8] 6? 10 [6 3?] "
+-- -- note "10?"
+-- -- note "[~ 12] [9 11] 7 ~"
+-- -- brak $ linger "<0.25 0.5 1>" $ slow 0.5 $ every 4 (slow 0.5) $ note "6(4,8)"
+-- ] |+| note "-24"
+-- m2 silence
+-- m1 $ stack[
+-- -- every 4 (rev) $ note "0 [~ 3] [7 ~ -2? 10 ] [15 12 19? ~]? " |+| stack[note "-12", note "5"] |+| dur 0.1
+-- every 2 (rev) $ note "-2(3,8) [0 3]" |+| dur 0.8 |+| velocity "0.6",
+-- iter 4 $ every 2 (rev) $ every 4 (0.25<~) $ note " [~ 7] [5 12] [15 22] [24 26 27 ~]" |+| dur 0.6
+-- -- slow 0.5 $ iter 2 $ whenmod 4 3 (rev) $ note "[10 8?] 12 14 [15 19?]" |+| note "-12"
+-- ]
+--
+-- m1 $ silence
+--
+-- bps(70/60)
+-- m2 silence
+-- m2 $ stack[
+-- -- degradeBy 0.7 $ every 2 (rev) $ every 8 (stut 4 0.3 (-0.25)) $ every 4 (0.25<~) $ note "[~ 0] [~ 0 1 ~] [~ 0 6 2] [3 ~ 10 1]" |+| velocity 0.8,
+-- -- linger "<0.25 0.5 1>" $ note "6(4,8)",
+-- note "10 ~ [~ 1] ~" |+| velocity 1
+-- -- iter 4 $ note "8 [11 9] [12 7] ~" |+| velocity 1
+-- ]
+--  |+| note "-24"
+-- m1 $ silence
+-- m1 $ stack[
+-- every 4 (rev) $ every 2 (|+| note "-2") $ note "5(4,8)" |+| dur 0.3 |+| velocity 0.6,
+-- every 2 (rev) $ note " [22 12] ~ [8 10 12 22] ~ ",
+-- note "10(2,8) [~ 24]" |+| dur 0.6
+-- ]
+--
+-- m2 $ stack [
+-- every 4 (const $ note "0(3,8)  3") $ note "0 [8 0] 3 [2? ~ 7 1]" ,
+-- -- linger "<0.25 0.5 0.75>" $ every 4 (slow 0.25) $ slow 0.5 $ note "6(2,8) 8(2,8)",
+-- -- iter 4 $ note "~ [11 7] [12 9] ~"
+-- ] |+| note "-24" |+| velocity 1
+--
+-- bps(70/60)
+--
+-- m2 $ stack[
+-- degrade $ every 4 (0.25<~ ) $ every 3 (rev) $ note "[~ 0] [~ 0] [~ 0] [~ 3 ~ 1]" ,
+-- slow 0.5 $ note "10? 6 ~ [~ 6]"
+-- -- every 2 (rev) $ iter 4 $ note "~ [12 7][11 9]~"
+-- ] |+| note "-24" |+| velocity 1
+
+-- m2 silence
+-- m1 silence
+--
+-- m2 $ stack[
+-- every 4 (0.25<~) $ note "[~ 0] [~ 0] [~ 0 6 2] ~ ",
+-- slow 0.5 $ note "10? 4 ~ 6",
+-- -- linger "<0.25 0.5 1>" $ every 4 (slow 0.25) $ slow 0.5 $ note "6(4,8)",
+-- iter 4 $ stut 2 0.1 (0.125) $ note "10? ~ 3? [~ 1]" |+| velocity 0.9
+-- ] |+| note "-24"
+--
+-- m1 $ stack[
+-- note "[-2 0 -3? -5](3,8)" |+| stack[ note "5"] |+| dur (0.3 + 0.2*sine) |+| velocity (0.7+0.1*sine ),
+-- linger "<0.5 0.25 1>" $ every 2 (rev) $ note "[~ 12] 5 [10 15] [3 -5 19 20]" |+| note "<0 12>"
+-- ]
+--
+-- m2 $ stack [
+-- note "[~0] [~ 0] [~ 0 6  2 ] ~" ,
+-- linger "<0.25 0.5 1>" $ every 4 (slow 2) $ slow 0.5 $ note "[6 8](4,8)",
+-- iter 4 $ every 3 (stut 4 0.2 (0.25)) $ chop 2 $ note "~ ~ [12 11] [9 7]",
+-- every 2 (stut 2 0.2 (0.125)) $ note "10? [~ 3] ~ 4"
+-- ] |+| note "-24" |+| velocity 1
+--
+-- m2 silence
+-- m1 silence
+--
+-- --
+-- m1 $ stack[
+-- every 2 (rev) $ linger "<0.25 0.75>" $  brak $ note "3 [5 8] 19 [15? 10]" |+| stack[ note "5"] |+| dur 0.3,
+-- every 2 (|+| note "-5")$  note "22(3,8)"
+-- ]
+
+bps(70/60)
+
+m2 $ stack[
+every 4 (const $ note "0(3,8) 3") $ note "0 [~ 0] 2~ ",
+iter 4 $ note "~ ~ [12 9][11 7]",
+note "[6 8](4,8)"
+] |+| note "-24"
+
+m2 silence
+
+m2 $ stack[
+every 4 (0.25<~) $ every 8 (chop 2) $  note "[~ 0] [~ 0] [~ 0 6 ~] ~",
+linger "<0.25 0.5 1>" $ every 2 (stut 4 0.3 (0.25)) $ slow 0.5 $ note "~ 6 8 6"
+-- iter 4 $ every 3 (chop 4) $ note "10 8 ~ 3"
+] |+| note "-24" |+| velocity 1
+
+m1 $ stack[
+every 4 (0.25<~) $ brak $ whenmod 3 2 (0.25<~) $ note "-5 0 8 [-2 24 ]" |+| note "<0 12>" |+|  note "5",
+brak $ note "[0 5] (3,8)" |+| note "<0 -12 5>" |+| dur 0.9
+]
+
+
+m2 silence
+bps(130/60)
+
+m2 $ stack[
+every 4 (0.25<~) $ note "[~ 0] 0? 3 [2 ~ 1 ~]",
+every 3 (stut 2 0.2 (0.25)) $ note "10? [6 2 6 ~ ]",
+iter 3 $ note "~ 4 8 ~"
+] |+| note "-24"
+
+m2 $ stack[
+note "~ 6 1 [~ 2?]",
+every 4 (0.25<~) $ note "[~ 0] ~ ~ 5",
+iter 4 $ note "6 10 [~ 8] 3"
+]
+ |+| note "-24"

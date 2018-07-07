@@ -1,0 +1,71 @@
+bps (100/60)
+
+d1 $ every 4 (0.25 <~) $ stut 8 0.2 0.2 $ slow 2 $ sound "tbd:3 [thh tsn:5] [~ ~ thh tsn:3] thh"
+d2 $ shuffle 2 $ chop 8 $ sound (samples "moog*2" (run 2))
+d1 $ slow 4 $ sound " [808bd ~ ] [~ sn:2 ~ tsn] [ ~ 808bd] [~ sn ~ tsn]"
+d1 $ silence
+-- Bass
+
+
+d2 $ slow 1 $ striate 2 $ shuffle 4 $ sound "thh:2 thh ~ thh:3"
+
+d3 $ slow 8 $ striate 8 $ sound "~ [ ~ [tsn:5 tsn:5] ]"
+d3 $ silence
+
+d2 $ shuffle 4 $ slow 4 $ striate 2 $ sound "tav:5(5,8)" # speed 1 # pan 0
+
+d2 $ shuffle 8 $ striate 2 $ sound "tas:15 [tav:12 tas:11]" # speed "1 1 1" # gain 1
+d2 $ silence
+d1 $ slow 2 $ sound "tbd:3 [~ tsn:5 ~ tsn:4] [tbd:4 [tsn:5 bass ]] [~ tsn:3 ~ tsn:3]" # gain 1.2
+d1 $ slow 2 $ striate 1 $ sound "tbd:3 [~ tas:14 ~ tsn:5] [bass tbd:3] [~ tsn:5 ~ tas:4]"
+d1 $ slow 2 $ sound "bass ~ [bass bass] ~"
+
+d1 $ slow 1 $ striate 1 $ sound "tbd:3(3,8)" # gain 1.1
+
+d4 $ striate 8 $ slow 4 $ sound "[~ tas:8] [thh:3 thh:3] thh:3 thh:2 "
+d1 $ striate 8 $ slow 4 $ sound "tas:8 [~ tas:11] [~ tas:1] " # pan "0.61 0.15 0.45" # gain 1.1
+d4 $ silence
+
+d2 $ striate 1 $ slow 2 $ sound "tsn:5 tsn:5 ~ [thh tsn:4 thh:3]" # gain 1
+d2 silence
+
+d5 $ silence
+d6 $ slow 4 $ shuffle 7 $ striate 4 $ sound "tas:10 ~ [[~ tas:4] [ ~ 808lt]]" |+| delay "0.5" |+| delaytime "0.2" |+| delayfeedback "0.9"
+d6 $ silence
+d2 $ slow 8 $ striate 8 $ iter 8 $ sound (samples "tav*8" (run 14)) # gain 1 # pan (rand)
+
+d3 $ degrade $ iter 4 $ palindrome $ striate 1 $ slow 2 $ sound (samples "tmess*16 " (run 7)) # gain 0.9 # speed 2
+d4 $ degrade $ shuffle 8 $ striate 1 $ slow 2 $ sound (samples "tmess*16 " (run 8)) # gain 1 # speed 1.25 # pan (rand)
+d5 $ palindrome $ shuffle 8 $ slow 2 $ sound (samples "tmess*16 " (run 12)) # gain 1.1 # speed 0.5
+d5 $ silence
+d4 $ striate 4 $ slow 2 $ sound "thh:2 [thh thh:2] ~ [tas:13 thh:2 ]"
+d4 $ silence
+
+d5 $ striate 16 $ slow 4 $ sound (samples "tas*8" (run 16)) # gain 0.6 # pan (scale 0.1 0.4 $ slow 0.5 sine1)
+d1 $ brak $ striate 1 $ slow 2 $ sound "tbd:2 [tbd:3 tbd:3] [sn:2 ~] ~" # gain 1
+hush
+
+d1 $ degradeBy 0 $ slow 2 $ sound "[tbd:3 ~ ][[~ tbd:3] tsn:5] ~ [ ~ [ tbd:3 tsn:3]]"
+d1 $ slow 1 $ sound "tbd:3(3,8)" # gain 1.1
+
+
+d4 $ slow 2 $ sound "tas:11 [thh thh thh:2 thh] [tas:7 thh:3 thh tsn:5] tbd:3*4"
+
+d1 $ degradeBy 0.2 $ iter 1 $ striate 1 $ slow 2 $ sound "[tbd:2 thh:3 thh tbd:3] [tsn:5 thh thh:5 thh:5] [tbd:2 thh thh tbd:2] [thh tbd:3 tsn:4 tsn:5]" # gain 1.1
+d1 $ slow 1 $ sound "tbd:3*8"
+
+d2 $ every 4 (0.25 <~) $ striate 2 $ slow 4 $ sound "[808ht:3 thh:3] [[808lc:3 ~ ] tsn:5] tsn:4 tsn:4"
+
+d1 $ degradeBy 0.8 $ slow 2 $ sound "[[tbd:3 tsn:4] [thh tbd:2] [tsn:5 thh] [ thh tsn:4]] [[thh tsn:3 ] [ thh tbd:3] [tsn:5 tbd:3] [thh tsn:4]]"
+
+d1 $ striate 2 $ sound "tav:11 [tbd:4 tbd:4] tsn:5 tbd:3" # gain 1.1
+d1 $ silence
+
+d4 $ brak $ striate 2 $ slow 1 $ sound (samples "pad" (run 12)) |+| speed (scale 0.5 2 $ slow 2.4 sine1) # pan (scale 0.1 0.9 $ slow 1 sine1) # gain 0.7 |+| striate 1 (delay "0.5") |+| delayfeedback "0.8" |+| delaytime "0.1"
+d4 $ silence
+
+d2 $ slow 2 $ sound "tsn:5" |+| speed (scale 0.5 1 $ slow 4.1 sine1) |+| delay "1" |+| delayfeedback "0.6" |+| delaytime "0.2"
+
+
+
+d1 $ degradeBy 0.8 $ slow 2 $ sound "[bd:3 thh] [thh tbd:3] [tsn:5 thh] [tsn:4 thh]" |+| delay "0.2" |+| delaytime (scale 0.1 0.9 $ slow 0.25 sine1) |+| delayfeedback "0.8"

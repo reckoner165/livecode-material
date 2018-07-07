@@ -1,0 +1,82 @@
+
+
+d1 $ stack [
+-- degradeBy 0.8 $ stut 4 0.7 0.25 $ sound (samples "tok*4" (run 4)),
+-- stut 4 0.8 (0.25 ) $ every 4 (|+| speed "1.2") $ sound "gg:3 tas:4",
+degradeBy 0.4 $ brak $ sound (samples "v*16" (run 7)) |+| speed (rand) |+| pan (0.2),
+-- linger "<0.25 0.5>" $ sound "tas:4 tav:7" |+| speed "<1.2 2.5 2 0.66>",
+-- whenmod 3 2 (0.25 <~) $ jux(rev) $ sound "[thh:2 [thh:1*2]] thh:3*2",
+-- linger "<0.25 0.5 0.75>" $ every 4 (rev) $ gap 8 $ sound (samples "tmess*4" (run 12))  |+| speed "<2 2.4 1.2 0.5>" |+| crush 3 |+| pan (rand)
+-- brak $ sound "vk:2(2,8)"
+degradeBy 0.7 $ stut 4 0.2 (0.5) $ iter 4 $ every 4 (rev) $ every 2 (const $ sound "[vk vk:1] [tsn:2 vk:2] [~ vk:1] tsn:4 ") $ sound "[vk vk:1] [vsn:2 vsn:2] [vk:1? vk:1] vsn:2 "
+]
+
+
+-- hush
+
+
+d1 $ stack [
+linger "<0.25 0.5 0.125 0.75>" $ chunk 8 (hurry 2) $ striate 2 $ every 4 (jux rev) $ whenmod 8 6 (const $ sound "[vk:1 808lc] [vk:1 vk:1] 808lc ~ ") $ sound "[vk:1 808lt] [~ vk:1] 808lc ~ "
+-- |+| crush 5 |+| hpf "<400 500 700>" |+| hpq 0.6 |+| speed 2,
+-- every 4 (const $ sound "tbd:2(4,8) tsn:4") $ sound "tbd:2(3,8) tsn:4",
+-- sound "[vk kr:1?] [~ vk:2] kr:1 [~ kr:1] " |+| gain 1
+-- every 4 (jux rev) $ every 8 (chunk 2 (hurry 2)) $ sound "[kr kr:1] ~ kr [kr:1] ",
+-- linger "<0.25 0.75 0.5>" $ sound "kr:5*4" |+| gain "<1 1.1 0.9>" |+| pan 0.3,
+-- degradeBy 0.2 $ every 4 (rev) $ iter 4 $ sound " ~ ~ [808lc 808ht] [808hc 808lt]"
+-- degradeBy 0.2 $ jux (stut 4 0.2 (-0.25)) $ gap 2 $ sound "v*8" |+| speed (rand) |+| lpq 0.8 |+| lpf 400 |+| hpf 100 |+| hpq 0.8 |+| crush 2
+]
+--
+
+--
+-- d1 $ stack [
+-- degradeBy 0.3 $ stut 4 0.3 (0.25) $ sound (samples "tok*4" (run 3)),
+-- -- degradeBy 0.2 $ brak $ every 2 (rev) $ sound (samples "v*4" (run 7)) |+| speed (rand) |*| speed 4 |+| gain 0.9 |+| crush 4,
+-- degradeBy 0.2 $ iter 4 $ jux (striate 2 ) $ stut 4 0.4 (0.25) $ every 4 (rev) $ sound "vk:3 [vk:1 vk:1] vsn:2 ~",
+-- -- whenmod 8 7 (0.25<~) $ stut 8 0.4 (0.5) $ shuffle 4 $ sound "[~ vk:1?] [~ vk:1] tsn:4 ~" |+| gain 1.2 |+| pan (rand) |+| crush 3,
+-- sound "vk:1(3,8)",
+-- brak $ sound "vhh:4*2 vhh:3*3" |+| gain 1.2,
+-- -- every 4 (stut 4 0.8 (0.25)) $ sound "~ ~ [808lc 808ht] [808hc 808lt]",
+-- degradeBy 0.4 $ striate 2 $ linger "<0.25 0.25 0.75>" $ every 4 (rev) $ gap 2 $ sound (samples "tmess*8" (run 7)) |+| speed "<1.25 2.5 2 0.75>" |+| crush 3
+-- ]
+--
+
+hush
+d1 $ stack [
+degradeBy 0.3 $ stut 4 0.8 (0.25) $ sound (samples "tok*4" (run 4)) |*| speed (2 + 2 * sin 4) |+| lpq 0.5 |+| lpf "<800 900 700>" |+| crush 7 |+| pan (rand),
+brak $ jux (rev) $ every 4 (chunk 2 (hurry 2)) $ every 2 (0.25<~) $ iter 4 $ stut 4 0.3 0.5 $ sound "vk:1 thh:2 vsn:2 [~ vsn:1]" |+| lpf 600,
+sound "tbd:2 [thh:3 tsn:4 ] ~ ~ ",
+brak $ sound "vhh:4*2 vhh:2*3" |+| pan 0.8
+]
+
+--
+-- d1 $ stack[
+-- degradeBy 0.6 $ stut 8 0.6 0.25 $ sound (samples "tok*4" (run 4)) |+| hpf 500 |+| crush 5,
+-- -- brak $ degradeBy 0.5 $ chop 2 $ jux (rev) $ sound "vk:1 [~ tsn:4?] tsn:2 [vk vsn:2]",
+-- brak $ sound "vk:1(3,8) tsn:4",
+-- -- every 4 (0.25<~) $ whenmod 7 6 (rev) $ sound "~ ~ [808lc 808ht] [808hc 808lt]" |+| speed "<1 1.2>",
+-- -- every 2 (rev) $ gap 2 $ iter 4 $ sound (samples "tav*8" (run 7)) |+| speed (2 * sin 4) |+| pan (rand),
+-- linger "<0.25 0.5 0.75 1>" $ stut 4 0.25 (-0.25) $ every 2 (rev) $ sound (samples "tmess*16" (run 12)) |+| speed "<2 2.5 1.5 0.5>",
+-- sound "hh*8"
+-- ]
+
+
+
+
+
+d1 $ stack [
+-- degradeBy 0.4 $ stut 4 0.5 0.25 $ every 4 (jux rev) $ sound (samples "tok*4" (run 3)) |+| hpf 400 |+| hpq 0.6,
+-- degrade $ striate 4 $ sound "~ ~ vk:1 [thh:4 tsn:3]" # pan 0.3,
+-- degradeBy 0.3 $ brak $ striate 4 $ every 4 (const $ sound "tbd:3 [~tbd:2] vsn:4 ~ ") $ sound "tbd:3(4,8) vsn:4" |+| crush 4,
+-- -- sound "~ ~ tsn:4 [~ tsn:4]" |+| pan 0.9,
+-- -- iter 4 $ slow 0.5 $ trunc "<1 0.75>" $ sound "[~ vk] [vk:2] vsn:1 [~ vsn:1]" |+| gain 1.2 |+| lpf 800 |+| lpq 0.5 |+| hpq 300,
+-- degradeBy 0.4 $ linger "<0.25 0.5>" $ gap 2 $ jux (rev) $ stut 2 0.8 0.5 $ sound (samples "tmess*16" (run 12)) |+| speed "<2 2.5 3 1>" |+| crush 3,
+linger "<0.25 0.5>" $ brak $ sound "vhh:3*3 thh:4*4",
+linger "<0.25 0.5>" $ stut 4 0.8 0.125 $ sound (samples "v*16" (run 5)) |+| speed (rand) |*| speed "<2 4>"
+-- brak $ whenmod 8 7 (|*| speed "-1") $ jux (rev) $ stut 4 0.6 (-0.25) $ every 4 (0.25<~) $ iter 4 $ sound "vk [~ vk:1] [tsn:4 vsn:2] [~ tsn:3] ",
+-- linger "<0.25 0.5 1 0.75>" $ striate 2 $ gap 8 $ sound "tav:2 [tas:7 gg:4] tas:4 ~" |+| speed "<0.5 0.75>" |+| pan (rand),
+-- every 4 (stut 4 0.5 0.25) $ jux (|*| speed 2) $ sound "~ ~ [808lc 808ht] [808hc 808lt]" |+| speed "<1 1.2>"
+]
+
+
+
+hush
