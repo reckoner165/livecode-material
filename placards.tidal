@@ -1,0 +1,30 @@
+-- MIDI
+
+import Sound.Tidal.MIDI.Context
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+bps(63.48/60)
+m1 $ slow 2 $ note "10 [8 4] 8 8" |+| note "-24" 
+
+
+-- drum phrasing 1
+m1 $ stack [
+note "15 15" |+| velocity "0.3 0.3",
+slow 2 $ note "0 4 [~ 0] 4" |+| velocity 0.6,
+slow 2 $ degradeBy 0.3 $ note "[~ 0] [~ ~ ~ 0] [~ ~ ~ 0] [~ ~ ~ 4?]" |+| velocity 0.45,
+slow 2 $ every 4 (const $ note "~ ~ [~ 4 0 ~] ~") $ note "~"
+] |+| note "-24"
+
+-- drum phrasing 2 
+
+m1 $ stack [
+fast 2 $ note "15 15" |+| velocity "0.2 0.2",
+slow 2 $ note "0 4 [~ 0] 4" |+| velocity 0.6,
+slow 2 $ degradeBy 0.2 $ note "[~ 0] [~ ~ ~ 4] [~ 4 ~ ~] [~ ~ ~ 4?]" |+| velocity 0.45
+--slow 2 $ every 4 (const $ note "~ ~ [~ 4 0 ~] ~") $ note "~"
+] |+| note "-24"
+
+
+m1 $ silence	

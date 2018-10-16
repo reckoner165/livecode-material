@@ -1,0 +1,92 @@
+
+-- Verse
+d1 $ every' 8 7 (const $ stack [
+    degradeBy 0.2  $ sound " [kr:1? kr:1] [kr:7 kr:1] [kr:7 kr:8] kr:8" |+| nudge "[0 0.02] 0.01 [0 0.025] 0.01" |+| gain (0.85 + rand*0.15)
+]) $ stack [
+    every 4 (const $ sound "hh:1 hh") $ sound "hh hh" |+| pan 0.4,
+    jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr kr:1]" |+| nudge "0 0 0 [0 0.02]",
+    every 4 (const $ sound "kr") $ sound "~"
+    ]
+ 
+-- Chorus
+d1 $ stack [
+    every 4 (const $ sound "hh:1 hh") $ sound "hh hh" |+| pan 0.4,
+    jux (|*| speed 1.05) $ sound "~ bd:2 sn:1 [bd:2 sn:1]" |+| nudge "0 0 0 [0 0.025]",
+    every 4 (const $ sound "bd:2" |+| gain 1) $ sound "[~ sn:1?] ~ ~ ~" |+| gain 0.8
+]
+ 
+-- Outro
+d1 $ stack [
+    sound "hh hh" |+| pan 0.4,
+    sound "[~ sn:1] [bd:1 bd:1] sn:1  [~ sn:1?]" |+| gain "1 [1 0.8] [1 0.8] 0.9",
+    degradeBy 0.7 $ sound "~ ~ [~ sn:1] ~" |+| gain 0.7 |+| nudge (rand * 0.02)
+]
+ 
+hush
+
+
+-- MIDI
+
+import Sound.Tidal.MIDI.Context
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+bps(115/60)
+m1 $ slow 2 $ note "10 [8 4] 8 8" |+| note "-24" 
+
+-- Verse
+m1 $ every' 16 15 (const $ stack [
+    note " [12? 4] [12 4] [5 5] [7 7]" |+| nudge "0 0 [0 0.01] 0.02" |+| velocity "[0.55 0.5] [0.45 0.4] [0.4 0.3] [0.5 0.4]" |+| note "-24"
+]) $ stack [
+    slow 2 $ every 8 (const $ note "8 [8 13] 8 8" |+| velocity "0.5 [0.5 0.25] 0.5 0.5") $ note "8 8 8 8",
+    every 8 (const $ note "~ 0 ~ 4]" |+| nudge "0 0 0 [0 0.02]") $ note "~ 0 4 [0 4]" |+| nudge "0 0 0 [0 0.02]" |+| velocity "0.5 0.4 [0.6 0.3] 0.45",
+    every 16 (const $ note "[7 7] ~ ~ ~" |+| velocity "0.4") $ every 4 (const $ note "0" |+| velocity "0.4") $ note "~"
+    ] |+| note "-24"
+
+-- Chorus
+m1 $ stack [
+    every 4 (const $ note "13 8") $ note "8 8",
+    note "~ 0 4 [0 4]" |+| nudge "0 0 0 [0 0.025]",
+    every 4 (const $ note "0") $ note "[~ 4?] ~ ~ ~" |+| velocity "0.4" |+| nudge "0.02"
+]|+| note "-24"
+
+-- Outro
+
+m1 $ stack [
+    slow 2 $ note "~ 8 8 8" ,
+    slow 2 $ every 4 (const $ every 8 (const $ note "15 ~ ~ ~") $ note "8 10 ~ ~") $ note "8 ~ ~ ~",
+    every 8 (const $ degradeBy 0.1 $ every 64 ( striate 2) $ note "[~ 4] [12 4] [12 4] [5 7]" |+| velocity "0.6 [0.55 0.45] [0.3 0.45] [0.5 0.45]" |+| nudge "0 [0 0.01] 0 0 ") 
+    $ every 4 (const $ note "[~ 4] [0 0] [~ 0] [4 12]" |+| velocity "0.5 [0.5 0.4] 0.5 [0.3 0.45]" |+| nudge "0 [0 0.01] 0 0 ") 
+    $ note "[~ 4] [0 0] 4 [4? 12]" |+| velocity "0.5 [0.5 0.4] 0.7 [0.25 0.4]" |+| nudge "0 [0 0.01] 0 0 "
+    ] |+| note "-24" 
+
+m1 $ silence	
+
+
+
+-- Evening Rituals
+
+import Sound.Tidal.MIDI.Context
+devices <- midiDevices
+
+m1 $ silence
+
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+bps (90/60)
+m1 $ linger "< 0.0625 0.125 0.25 0.75 0.5 1>" $ iter 4 $ every 8 (fast 2) $ note "[9 11] [2 7?] [6 6] [12 -12]" |+| note "<14 26>" |+| velocity (0.8 + 0.3*sin 3)
+
+m1 $ note "2*16" |+| note "<>"
+
+import Sound.Tidal.MIDI.Context
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+bps (110/60)
+m1 $ slow 32 $ note "0 4 2 5 4 7 5 9 7 11 9 12 11 14 12 ~ ~ 12 9 11 7 9 5 7 4 5 2 4 0 2 -1 0 ~ ~" |+| note "-8" |+| dur 0.8
+
+
+

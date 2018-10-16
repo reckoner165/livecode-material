@@ -24,17 +24,20 @@ d4 $ slow 2 $ sound "[~  ~ kr:1 ~] [~ kr:1 ~ ~][kr:1 kr:1 kr:1 ] kr:8 " # gain 1
 
 d2 silence
 
-
+hush
 d1 $ slow 2 $ sound "kr kr kr:1 [kr kr:1] ~ kr kr:1 [kr kr:1]"
 
 -- Supply Chain Quotidienne
-bps (107/60)
+bps (117/60)
 -- Verse
 d1 $ cat [
   stack[jux (|*| speed 1.05) $ sound "kr kr kr:1 [kr kr:1]", every 2 (const $ sound "kr:6 kr:2" |+| pan "0.7 0.3") $ sound "kr:6 kr:6" |+| pan 0.7],
-  stack[jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr? kr:1]", sound "kr:6 kr:6" |+| pan 0.7],
+  stack[jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr? kr:1]" |+| nudge "0 0 0 [0 0.02]", sound "kr:6 kr:6" |+| pan 0.7],
   stack[jux (|*| speed 1.05) $  sound "~ kr kr:1 [kr kr:1]", sound "kr:6 kr:6" |+| pan 0.7],
-  every 2 (const $ stack[ jux (|*| speed 1.05) $ sound "[kr:1? kr:1] [kr:8 kr:1] [kr:7 kr:8] kr", sound "kr:6 kr:6" |+| pan 0.7]) $ stack[ jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr kr:1]", sound "kr:6 kr:6" |+| pan 0.7]
+  every 2 (const $ stack[
+    jux (|*| speed 1.05) $ sound "[kr:1? kr:1] [kr:8 kr:1] [kr:7 kr:8] kr" |+| gain "[1 0.9] [0.6 1] [1 0.8] 1" |+| nudge "[0 0.02] [0 0.025] 0 [0 0.02]",
+    sound "kr:6 kr:6" |+| pan 0.7]) $ stack[ jux (|*| speed 1.05) $ sound "~ kr kr:1 [kr kr:1]", sound "kr:6 kr:6" |+| pan 0.7
+    ]
 ] # gain 1.2
 
 -- Chorus
@@ -55,6 +58,13 @@ every 4 (const $ sound "[kr kr:9][kr:1 kr:1][kr kr:7][kr:8 kr:8]") $ sound "[kr 
 slow 2 $ sound "kr:2*8" |+| gain (0.8 + 0.2*sin 1) |+| speed (1 + 0.07 * sin 3) |+| pan 0.3
 ] |*| gain 1.2
 
+d1 $ silence
+d1 $ stack [
+sound "kr:6*2",
+jux (|*| speed 1.05) $ sound "[kr:3? kr:1] [kr kr] [kr:1 ~] ~" |+| gain (0.87 + rand * 0.2),
+degrade $ sound "~ ~ [~ kr:1] [~ kr:1?]" |+| gain 0.8
+]
+q
 hush
 
 ---

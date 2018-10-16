@@ -1,0 +1,6 @@
+
+import Sound.Tidal.MIDI.Context
+devices <- midiDevices
+
+m1 $ silence
+
